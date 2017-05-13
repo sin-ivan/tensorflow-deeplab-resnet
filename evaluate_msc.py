@@ -4,7 +4,7 @@
 This script evaluates the model on 1449 validation images.
 """
 
-from __future__ import print_function
+
 
 import argparse
 from datetime import datetime
@@ -15,7 +15,7 @@ import time
 import tensorflow as tf
 import numpy as np
 
-from deeplab_resnet import DeepLabResNetModel, ImageReader, prepare_label
+from .deeplab_resnet import DeepLabResNetModel, ImageReader, prepare_label
 
 IMG_MEAN = np.array((104.00698793,116.66876762,122.67891434), dtype=np.float32)
 

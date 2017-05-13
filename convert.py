@@ -5,8 +5,8 @@ import os
 import sys
 import numpy as np
 import argparse
-from kaffe import KaffeError, print_stderr
-from kaffe.tensorflow import TensorFlowTransformer
+from .kaffe import KaffeError, print_stderr
+from .kaffe.tensorflow import TensorFlowTransformer
 
 
 def fatal_error(msg):

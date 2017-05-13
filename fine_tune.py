@@ -6,7 +6,7 @@ which contains approximately 10000 images for training and 1500 images for valid
 Only the last 'fc1_voc12' layers are being trained.
 """
 
-from __future__ import print_function
+
 
 import argparse
 from datetime import datetime
@@ -17,7 +17,7 @@ import time
 import tensorflow as tf
 import numpy as np
 
-from deeplab_resnet import DeepLabResNetModel, ImageReader, decode_labels, inv_preprocess, prepare_label
+from .deeplab_resnet import DeepLabResNetModel, ImageReader, decode_labels, inv_preprocess, prepare_label
 
 IMG_MEAN = np.array((104.00698793,116.66876762,122.67891434), dtype=np.float32)
 
@@ -103,7 +103,7 @@ def main():
     """Create the model and start the training."""
     args = get_arguments()
     
-    h, w = map(int, args.input_size.split(','))
+    h, w = list(map(int, args.input_size.split(',')))
     input_size = (h, w)
     
     tf.set_random_seed(args.random_seed)

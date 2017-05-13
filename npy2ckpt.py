@@ -4,7 +4,7 @@ This script converts the weights of the DeepLab-ResNet model
 from the numpy format into the TensorFlow one.
 """
 
-from __future__ import print_function
+
 
 import argparse
 import os
@@ -12,7 +12,7 @@ import os
 import tensorflow as tf
 import numpy as np
 
-from deeplab_resnet import DeepLabResNetModel
+from .deeplab_resnet import DeepLabResNetModel
 
 SAVE_DIR = './'
 

@@ -5,7 +5,7 @@ This script trains the model using augmented PASCAL VOC,
 which contains approximately 10000 images for training and 1500 images for validation.
 """
 
-from __future__ import print_function
+
 
 import argparse
 from datetime import datetime
@@ -16,7 +16,7 @@ import time
 import tensorflow as tf
 import numpy as np
 
-from deeplab_resnet import DeepLabResNetModel, ImageReader, decode_labels, inv_preprocess, prepare_label
+from .deeplab_resnet import DeepLabResNetModel, ImageReader, decode_labels, inv_preprocess, prepare_label
 
 IMG_MEAN = np.array((104.00698793,116.66876762,122.67891434), dtype=np.float32)
 
@@ -119,7 +119,7 @@ def main():
     """Create the model and start the training."""
     args = get_arguments()
     
-    h, w = map(int, args.input_size.split(','))
+    h, w = list(map(int, args.input_size.split(',')))
     input_size = (h, w)
     
     tf.set_random_seed(args.random_seed)
@@ -207,9 +207,9 @@ def main():
     grads_fc_w = grads[len(conv_trainable) : (len(conv_trainable) + len(fc_w_trainable))]
     grads_fc_b = grads[(len(conv_trainable) + len(fc_w_trainable)):]
 
-    train_op_conv = opt_conv.apply_gradients(zip(grads_conv, conv_trainable))
-    train_op_fc_w = opt_fc_w.apply_gradients(zip(grads_fc_w, fc_w_trainable))
-    train_op_fc_b = opt_fc_b.apply_gradients(zip(grads_fc_b, fc_b_trainable))
+    train_op_conv = opt_conv.apply_gradients(list(zip(grads_conv, conv_trainable)))
+    train_op_fc_w = opt_fc_w.apply_gradients(list(zip(grads_fc_w, fc_w_trainable)))
+    train_op_fc_b = opt_fc_b.apply_gradients(list(zip(grads_fc_b, fc_b_trainable)))
 
     train_op = tf.group(train_op_conv, train_op_fc_w, train_op_fc_b)
     

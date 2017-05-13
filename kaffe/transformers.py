@@ -38,7 +38,7 @@ class DataInjector(object):
         caffe = get_caffe_resolver().caffe
         net = caffe.Net(self.def_path, self.data_path, caffe.TEST)
         data = lambda blob: blob.data
-        self.params = [(k, map(data, v)) for k, v in net.params.items()]
+        self.params = [(k, list(map(data, v))) for k, v in list(net.params.items())]
 
     def load_using_pb(self):
         data = get_caffe_resolver().NetParameter()
@@ -53,7 +53,7 @@ class DataInjector(object):
         for blob in layer.blobs:
             if len(blob.shape.dim):
                 dims = blob.shape.dim
-                c_o, c_i, h, w = map(int, [1] * (4 - len(dims)) + list(dims))
+                c_o, c_i, h, w = list(map(int, [1] * (4 - len(dims)) + list(dims)))
             else:
                 c_o = blob.num
                 c_i = blob.channels
@@ -97,7 +97,7 @@ class DataReshaper(object):
         # A dictionary mapping NodeKind to the transposed order.
         self.mapping = mapping
         # The node kinds eligible for reshaping
-        self.reshaped_node_types = self.mapping.keys()
+        self.reshaped_node_types = list(self.mapping.keys())
         # If true, the reshaped data will replace the old one.
         # Otherwise, it's set to the reshaped_data attribute.
         self.replace = replace
@@ -291,5 +291,5 @@ class ParameterNamer(object):
                     'WARNING: Unhandled parameters: {}'.format(node.kind))
                 continue
             assert len(names) == len(node.data)
-            node.data = dict(zip(names, node.data))
+            node.data = dict(list(zip(names, node.data)))
         return graph
