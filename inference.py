@@ -86,7 +86,7 @@ def main():
         session.run(init)
 
         # Load weights.
-        loader = tf.train.Saver(var_list=restore_var)
+        loader = tf.train.Saver(tf.all_variables())
         load(loader, session, args.model_weights)
 
         # Perform inference.
