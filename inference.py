@@ -79,17 +79,17 @@ def main():
     # Set up TF session and initialize variables.
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
-    sess = tf.Session(config=config)
-    init = tf.global_variables_initializer()
 
-    sess.run(init)
+    with tf.Session(config=config) as session:
+        init = tf.global_variables_initializer()
+        session.run(init)
 
-    # Load weights.
-    loader = tf.train.Saver(var_list=restore_var)
-    load(loader, sess, args.model_weights)
+        # Load weights.
+        loader = tf.train.Saver(var_list=restore_var)
+        load(loader, session, args.model_weights)
 
-    # Perform inference.
-    preds = sess.run(pred)
+        # Perform inference.
+        preds = session.run(pred)
 
     msk = decode_labels(preds)
     im = Image.fromarray(msk[0])
