@@ -77,10 +77,11 @@ def main():
     pred = tf.expand_dims(raw_output_up, dim=3)
 
     # Set up TF session and initialize variables.
-    config = tf.ConfigProto()
-    config.gpu_options.allow_growth = True
+    # config = tf.ConfigProto()
+    # config.gpu_options.allow_growth = True
 
-    with tf.Session(config=config) as session:
+    graph = tf.get_default_graph()
+    with tf.Session(graph=graph) as session:
         init = tf.global_variables_initializer()
         session.run(init)
 
