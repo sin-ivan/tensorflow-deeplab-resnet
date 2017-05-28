@@ -79,6 +79,7 @@ def main():
     # Set up TF session and initialize variables.
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
+    tf.reset_default_graph()
     sess = tf.Session(config=config)
     init = tf.global_variables_initializer()
 
